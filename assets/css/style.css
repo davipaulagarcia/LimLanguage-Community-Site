@@ -243,6 +243,7 @@ a:hover { text-decoration-thickness: 2px; }
 .btn:active { transform: translateY(1px); }
 
 /* ---------- Seções ---------- */
+
 main { display: block; }
 main:focus { outline: none; }
 
