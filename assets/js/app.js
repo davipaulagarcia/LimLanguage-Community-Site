@@ -29,7 +29,7 @@
   }
 
   function isExternalForm() { return !!(CFG.formUrl && String(CFG.formUrl).trim()); }
-  function ctaHref() { return "participar.html"; }   // os botões "Entrar na comunidade" passam sempre pela explicação
+  function ctaHref() { return "participar.html"; }
   function formHref() { return isExternalForm() ? CFG.formUrl : "participar.html"; }
 
   function currentPage() {
@@ -90,6 +90,12 @@
     ["parcerias.html", "nav.partners"],
     ["contato.html", "nav.contact"]
   ];
+  var EXTRA_PAGES = [
+    ["index.html", "brand.home"],
+    ["carimbos.html", "stamps.title"],
+    ["participar.html", "join.title"],
+    ["faq.html", "faq.title"]
+  ];
 
   function renderChrome() {
     var page = currentPage();
@@ -101,6 +107,18 @@
         var cur = n[0] === page ? ' aria-current="page"' : "";
         return '<li><a href="' + n[0] + '"' + cur + ">" + esc(t(n[1])) + "</a></li>";
       }).join("");
+
+      var allLinks = [EXTRA_PAGES[0]].concat(NAV, EXTRA_PAGES.slice(1)).map(function (n) {
+        var cur = n[0] === page ? ' aria-current="page"' : "";
+        var label = t(n[1]).replace(/^LimLanguage,\s*/i, "");
+        label = label.charAt(0).toUpperCase() + label.slice(1);
+        return '<li><a href="' + n[0] + '"' + cur + ">" + esc(label) + "</a></li>";
+      }).join("");
+
+      var listIconSVG = '<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+        [5, 10, 15, 20].map(function (y) {
+          return '<circle cx="4" cy="' + y + '" r="1.8"/><rect x="8" y="' + (y - 1.5) + '" width="13" height="3" rx="1.5"/>';
+        }).join("") + "</svg>";
 
       var langBtns = LANGS.map(function (c) {
         var names = { pt: "Português", es: "Español", en: "English" };
@@ -124,6 +142,12 @@
             '<select class="theme-select" id="theme-select">' + themeOpts + "</select></div>" +
         "</div></div>" +
         '<div class="main-bar"><div class="wrap">' +
+          '<div class="menu-paginas" id="menu-paginas">' +
+            '<button type="button" class="btn-lista" id="btn-lista-paginas" aria-label="Todas as páginas" aria-expanded="false">' +
+              listIconSVG +
+            "</button>" +
+            '<ul class="dropdown-paginas" id="dropdown-paginas">' + allLinks + "</ul>" +
+          "</div>" +
           '<a class="brand" href="index.html" aria-label="' + esc(t("brand.home")) + '">' + LOGO +
             '<span class="brand-name">LimLanguage</span></a>' +
           '<a class="btn btn-primary btn-small" id="header-cta" href="' + esc(ctaHref()) + '">' + esc(t("cta.join")) + "</a>" +
@@ -136,6 +160,7 @@
         b.addEventListener("click", function () { setLang(b.getAttribute("data-lang")); });
       });
       document.getElementById("theme-select").addEventListener("change", function (e) { setTheme(e.target.value); });
+
       var toggle = document.getElementById("nav-toggle");
       var nav = document.getElementById("site-nav");
       toggle.addEventListener("click", function () {
@@ -144,6 +169,38 @@
       });
       nav.addEventListener("click", function (e) {
         if (e.target.tagName === "A") { nav.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); }
+      });
+
+      var btnLista = document.getElementById("btn-lista-paginas");
+      var dropPaginas = document.getElementById("dropdown-paginas");
+      var menuPaginas = document.getElementById("menu-paginas");
+      var timerMenu;
+      var fixado = false;
+
+      btnLista.addEventListener("click", function (e) {
+        e.stopPropagation();
+        fixado = !fixado;
+        dropPaginas.classList.toggle("ativo", fixado);
+        btnLista.setAttribute("aria-expanded", String(fixado));
+      });
+
+      menuPaginas.addEventListener("mouseenter", function () {
+        clearTimeout(timerMenu);
+        dropPaginas.classList.add("ativo");
+      });
+
+      menuPaginas.addEventListener("mouseleave", function () {
+        if (fixado) return;
+        timerMenu = setTimeout(function () {
+          dropPaginas.classList.remove("ativo");
+          btnLista.setAttribute("aria-expanded", "false");
+        }, 150);
+      });
+
+      document.addEventListener("click", function () {
+        fixado = false;
+        dropPaginas.classList.remove("ativo");
+        btnLista.setAttribute("aria-expanded", "false");
       });
     }
 
@@ -181,27 +238,34 @@
       });
     });
 
-    // Botões "Entrar na comunidade": levam à página "Como participar" (explicação antes do formulário)
+    // Botões "Entrar na comunidade": levam à página "Como participar"
     root.querySelectorAll("[data-cta]").forEach(function (a) {
       a.textContent = t(a.getAttribute("data-i18n") || "cta.join");
       a.setAttribute("href", ctaHref());
     });
 
-    // Botão da página "Como participar": é o único que abre o formulário (em nova aba)
+    // Botão da comunidade no WhatsApp (participar.html)
+    root.querySelectorAll("[data-whatsapp]").forEach(function (a) {
+      a.setAttribute("href", CFG.whatsappUrl || "#");
+      a.setAttribute("target", "_blank");
+      a.setAttribute("rel", "noopener");
+    });
+
+    // Botão de cadastro no formulário (participar.html)
     root.querySelectorAll("[data-form]").forEach(function (a) {
       var label = t(a.getAttribute("data-i18n") || "join.open");
       a.setAttribute("href", formHref());
       if (isExternalForm()) {
         a.setAttribute("target", "_blank");
         a.setAttribute("rel", "noopener");
-        a.textContent = label + t("common.newtab");   // um só texto, para não quebrar em duas colunas no botão
+        a.textContent = label + t("common.newtab");
       } else {
         a.textContent = label;
         a.removeAttribute("target");
       }
     });
 
-    // Links externos (Instagram etc.)
+    // Links externos (Instagram, LinkedIn etc.)
     root.querySelectorAll("[data-instagram]").forEach(function (a) {
       a.setAttribute("href", CFG.instagramUrl || "#");
       a.setAttribute("target", "_blank");
@@ -225,7 +289,7 @@
     root.querySelectorAll("[data-email]").forEach(function (el) { el.textContent = CFG.email || ""; });
     root.querySelectorAll("[data-mailto]").forEach(function (a) { a.setAttribute("href", "mailto:" + (CFG.email || "")); });
 
-    // Aviso de formulário pendente (só aparece para a equipe, enquanto formUrl estiver vazio)
+    // Aviso de formulário pendente (só aparece enquanto formUrl estiver vazio)
     root.querySelectorAll("[data-form-pending]").forEach(function (el) { el.hidden = isExternalForm(); });
 
     // Título da aba do navegador
@@ -266,7 +330,6 @@
           if (c.date && !/^\d{4}-\d{2}-\d{2}$/.test(c.date)) {
             state.notes.push("Evento \"" + c.name + "\": a data \"" + c.date + "\" não está no formato ano-mês-dia (ex.: 2026-12-05); o evento aparece sem data.");
           } else if (c.status === "upcoming" && c.date && c.date < today) {
-            // a data já passou: o evento vai sozinho para "Realizados"
             c.status = "done";
             state.notes.push("Evento \"" + c.name + "\": a data " + c.date + " já passou, então ele aparece em \"Realizados\" (não precisa trocar o status).");
           }
@@ -280,7 +343,6 @@
       });
   }
 
-  /* Aviso para a equipe: abra o site com ?checar=1 no final do endereço (ex.: eventos.html?checar=1) */
   function renderCheck() {
     var old = document.getElementById("ll-check");
     if (old) old.parentNode.removeChild(old);

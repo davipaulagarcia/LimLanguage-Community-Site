@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Como participar</title>
-<meta name="description" content="Como entrar na comunidade LimLanguage: abra o formulário de cadastro.">
+<meta name="description" content="Entre na comunidade da LimLanguage pelo WhatsApp e faça seu cadastro para acumular carimbos.">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,30 +13,68 @@
 <script>try{var t=localStorage.getItem("ll-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <script src="assets/js/config.js" defer></script>
 <script src="assets/js/i18n.js" defer></script>
-<script src="assets/js/app.js" defer></script>  
+<script src="assets/js/app.js" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main" data-i18n="skip">Ir para o conteúdo</a>
 <header id="site-header"></header>
 <noscript><p class="wrap notice">Este site precisa de JavaScript para mostrar o conteúdo. / This site needs JavaScript to show its content.</p></noscript>
+
 <main id="main" tabindex="-1">
-<section class="section">
-  <div class="wrap">
-    <h1 data-i18n="join.h1">Como participar</h1>
-    <p class="lead" data-i18n="join.lead">Entrar na comunidade leva poucos passos.</p>
-    <div class="actions" style="margin-bottom:2rem">
-      <a class="btn btn-primary" data-form data-i18n="join.open" href="participar.html">Abrir formulário de cadastro</a>
+  <section class="section join-section">
+    <div class="wrap join-wrap">
+      <div class="join-header">
+        <h1 data-i18n="join.h1">Como participar</h1>
+        <p class="lead" data-i18n="join.lead">Entrar na comunidade leva poucos segundos e é totalmente gratuito.</p>
+      </div>
+
+      <!-- Card principal: WhatsApp (igual ao que você aprovou) -->
+      <div class="card card-dashed join-card">
+        <h2 data-i18n="join.boxTitle">Comunidade no WhatsApp</h2>
+        <p data-i18n="join.whatsappDesc">
+          É pelo grupo que divulgamos as datas, horários e locais dos próximos encontros de idiomas. Não precisa ter nível avançado — basta chegar e conversar.
+        </p>
+
+        <div class="join-actions">
+          <a class="btn btn-whatsapp" data-whatsapp href="#">
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path fill="currentColor" d="M20.52 3.48A11.86 11.86 0 0 0 12.06 0C5.5 0 .16 5.34.16 11.9c0 2.1.55 4.15 1.6 5.96L0 24l6.32-1.66a11.85 11.85 0 0 0 5.74 1.46h.01c6.56 0 11.9-5.34 11.9-11.9 0-3.18-1.24-6.17-3.45-8.42ZM12.07 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.75.98 1-3.65-.24-.38a9.86 9.86 0 0 1-1.52-5.26c0-5.46 4.45-9.9 9.92-9.9 2.65 0 5.14 1.03 7.01 2.91a9.84 9.84 0 0 1 2.9 7c0 5.46-4.45 9.9-9.92 9.9Zm5.43-7.42c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.22 3.08.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35Z"/>
+            </svg>
+            <span data-i18n="join.whatsappBtn">Entrar na comunidade do WhatsApp</span>
+          </a>
+        </div>
+
+        <ul class="join-highlights">
+          <li data-i18n="join.hl1">Gratuito e aberto a todos</li>
+          <li data-i18n="join.hl2">Todos os níveis de idioma</li>
+          <li data-i18n="join.hl3">Encontros presenciais e leves</li>
+        </ul>
+      </div>
+
+      <!-- Bloco complementar destacado: Cadastro de carimbos (Forms) -->
+      <aside class="card join-form-card" aria-labelledby="join-form-h">
+        <div class="join-form-body">
+          <span class="join-stamp-pill" data-i18n="join.formTag">Carimbos &amp; Recompensas</span>
+          <h2 id="join-form-h" data-i18n="join.formTitle">Garanta seus carimbos nos encontros</h2>
+          <p data-i18n="join.formDesc">
+            Para contabilizar suas presenças, acumular carimbos e desbloquear recompensas, faça seu cadastro rápido uma única vez.
+          </p>
+          <a class="join-stamps-link" href="carimbos.html" data-i18n="join.formStampsLink">Ver como funcionam os carimbos →</a>
+        </div>
+        <div class="join-form-cta">
+          <a class="btn btn-primary join-form-btn" data-form data-i18n="join.formBtn" href="participar.html">Fazer cadastro</a>
+        </div>
+      </aside>
+
+      <p class="notice" data-form-pending data-i18n="join.pending" hidden>Aviso para a equipe: o link do formulário ainda não foi configurado.</p>
+
+      <p class="muted join-privacy" data-i18n="join.privacy">
+        Este site não coleta dados pessoais. O acesso ao WhatsApp e o cadastro no formulário abrem em outra aba.
+      </p>
     </div>
-    <p class="notice" data-form-pending data-i18n="join.pending" hidden>Aviso para a equipe: o link do formulário ainda não foi configurado.</p>
-    <ol class="steps">
-      <li><div><strong data-i18n="join.s1.t">Abra o formulário de cadastro</strong><span data-i18n="join.s1.p">Você preenche o cadastro uma única vez.</span></div></li>
-      <li><div><strong data-i18n="join.s2.t">Escolha um encontro</strong><span data-i18n="join.s2.p">Veja a agenda e entre no encontro que combinar com você.</span></div></li>
-      <li><div><strong data-i18n="join.s3.t">Faça o check-in no encontro</strong><span data-i18n="join.s3.p">Cada presença confirmada vale 1 carimbo.</span></div></li>
-    </ol>
-    <p class="muted" style="margin-top:2rem" data-i18n="join.privacy">Este site não coleta dados pessoais. O cadastro acontece no formulário, que abre em outra aba.</p>
-  </div>
-</section>
+  </section>
 </main>
+
 <footer id="site-footer"></footer>
 </body>
 </html>
