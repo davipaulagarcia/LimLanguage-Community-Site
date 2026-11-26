@@ -203,53 +203,27 @@
       });
     }
 
-    dropPaginas.innerHTML =
-      '<li class="drawer-paginas-topo"><span>Páginas</span>' +
-      '<button type="button" class="btn-fechar-drawer" id="btn-fechar-paginas" aria-label="Fechar">&times;</button></li>' +
-      allLinks;
-
-    function setDrawer(aberto) {
-      dropPaginas.classList.toggle("ativo", aberto);
-      backdrop.classList.toggle("ativo", aberto);
-      btnLista.setAttribute("aria-expanded", String(aberto));
+    if (footer) {
+      footer.className = "site-footer";
+      var mail = esc(CFG.email || "");
+      footer.innerHTML =
+        '<div class="wrap">' +
+        '<div class="footer-cols">' +
+          '<div><h2>' + esc(t("footer.about")) + "</h2><p>" + esc(t("footer.tag")) + "</p></div>" +
+          '<div><h2>' + esc(t("footer.contact")) + "</h2><ul>" +
+            '<li><a href="mailto:' + mail + '">' + mail + "</a></li>" +
+            '<li><a href="' + esc(CFG.instagramUrl || "#") + '" target="_blank" rel="noopener">' +
+              "Instagram" + '<span class="sr-only">' + esc(t("common.newtab")) + "</span></a></li>" +
+            '<li><a href="' + esc(CFG.linkedinUrl || "#") + '" target="_blank" rel="noopener">LinkedIn<span class="sr-only">' + esc(t("common.newtab")) + "</span></a></li>" +
+            "</ul></div>" +
+          '<div><h2>' + esc(t("footer.more")) + "</h2><ul>" +
+            '<li><a href="carimbos.html">' + esc(t("stamps.title")) + "</a></li>" +
+            '<li><a href="faq.html">' + esc(t("faq.title")) + "</a></li>" +
+            '<li><a href="participar.html">' + esc(t("join.title")) + "</a></li></ul></div>" +
+        "</div>" +
+        '<p class="indep">' + esc(t("footer.indep")) + "</p></div>";
     }
-
-    btnLista.addEventListener("click", function (e) {
-      e.stopPropagation();
-      setDrawer(!dropPaginas.classList.contains("ativo"));
-    });
-    document.getElementById("btn-fechar-paginas").addEventListener("click", function () { setDrawer(false); });
-    backdrop.addEventListener("click", function () { setDrawer(false); });
-    dropPaginas.addEventListener("click", function (e) {
-      var a = e.target.closest("a");
-      if (a) {
-        setDrawer(false);
-        window.location.href = a.getAttribute("href");
-      }
-    });
   }
-
-  if (footer) {
-    footer.className = "site-footer";
-    var mail = esc(CFG.email || "");
-    footer.innerHTML =
-      '<div class="wrap">' +
-      '<div class="footer-cols">' +
-        '<div><h2>' + esc(t("footer.about")) + "</h2><p>" + esc(t("footer.tag")) + "</p></div>" +
-        '<div><h2>' + esc(t("footer.contact")) + "</h2><ul>" +
-          '<li><a href="mailto:' + mail + '">' + mail + "</a></li>" +
-          '<li><a href="' + esc(CFG.instagramUrl || "#") + '" target="_blank" rel="noopener">' +
-            "Instagram" + '<span class="sr-only">' + esc(t("common.newtab")) + "</span></a></li>" +
-          '<li><a href="' + esc(CFG.linkedinUrl || "#") + '" target="_blank" rel="noopener">LinkedIn<span class="sr-only">' + esc(t("common.newtab")) + "</span></a></li>" +
-          "</ul></div>" +
-        '<div><h2>' + esc(t("footer.more")) + "</h2><ul>" +
-          '<li><a href="carimbos.html">' + esc(t("stamps.title")) + "</a></li>" +
-          '<li><a href="faq.html">' + esc(t("faq.title")) + "</a></li>" +
-          '<li><a href="participar.html">' + esc(t("join.title")) + "</a></li></ul></div>" +
-      "</div>" +
-      '<p class="indep">' + esc(t("footer.indep")) + "</p></div>";
-  }
-}
 
   /* ---------- textos estáticos ---------- */
   function applyI18n(root) {
