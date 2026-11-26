@@ -181,6 +181,52 @@ a:hover { text-decoration-thickness: 2px; }
 .site-nav a:hover { background: var(--done-bg); }
 .site-nav a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: .3em; }
 
+/* ---------- Menu dropdown de páginas ---------- */
+.menu-paginas { position: relative; display: inline-flex; }
+
+.btn-lista {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: inherit;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+  display: flex;
+}
+.btn-lista:hover { background: rgba(255, 255, 255, 0.12); }
+
+.dropdown-paginas {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: calc(100% - 2px);
+  background: var(--bg, var(--surface, var(--paper, #fff)));
+  color: var(--fg, var(--ink, var(--text, inherit)));
+  border: 2px solid currentColor;
+  min-width: 210px;
+  list-style: none;
+  padding: 6px 0;
+  border-radius: 8px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+  z-index: 9999;
+}
+.menu-paginas:hover .dropdown-paginas,
+.dropdown-paginas.ativo { display: block; }
+
+.dropdown-paginas a {
+  display: block;
+  padding: 10px 16px;
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+.dropdown-paginas a:hover,
+.dropdown-paginas a[aria-current="page"] {
+  background: rgba(128, 128, 128, 0.2);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
 /* ---------- Botões ---------- */
 /*botao menu inicio*/
 .menu-paginas { position: relative; display: inline-flex; }
@@ -445,7 +491,6 @@ main:focus { outline: none; }
 }
 
 @media (max-width: 560px) {
-  /* No celular o monograma LL fica sozinho; o botão de entrada ganha espaço */
   .brand { margin-right: 0; }
   .brand-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
   .main-bar .wrap { gap: .5rem; }
@@ -468,4 +513,155 @@ main:focus { outline: none; }
 .rules li::before {
   content: ""; position: absolute; left: 0; top: .3em; width: 1.2rem; height: 1.2rem;
   border: var(--border-w) solid var(--ink); border-radius: 50%; background: var(--done-bg);
+}
+
+/* ---------- Página Como Participar ---------- */
+.join-wrap {
+  max-width: 760px;
+}
+
+.join-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.join-header .lead {
+  margin-inline: auto;
+}
+
+.join-card {
+  text-align: center;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.join-card h2 {
+  margin-bottom: 0.75rem;
+}
+
+.join-card > p {
+  max-width: 54ch;
+  margin-inline: auto;
+  color: var(--muted);
+}
+
+.join-actions {
+  margin-block: 1.75rem 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-whatsapp {
+  background: #1B7A43;
+  color: #FFFFFF;
+  border-color: #1B7A43;
+  padding: 0.85rem 1.75rem;
+  font-size: 1.05rem;
+}
+
+.btn-whatsapp:hover {
+  background: #146134;
+  border-color: #146134;
+}
+
+:root[data-theme="hc"] .btn-whatsapp {
+  background: #000000;
+  color: #FFFFFF;
+  border-color: #000000;
+}
+
+.btn-icon {
+  width: 1.25em;
+  height: 1.25em;
+  flex: none;
+}
+
+.join-highlights {
+  list-style: none;
+  margin: 0;
+  padding: 1.25rem 0 0;
+  border-top: 1px dashed var(--line-soft);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.5rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.join-highlights li::before {
+  content: "✓ ";
+  color: var(--primary);
+  font-weight: 800;
+}
+
+/* ---------- Bloco de cadastro (Carimbos / Forms) ---------- */
+.join-form-card {
+  margin-top: 1.5rem;
+  padding: clamp(1.25rem, 3.5vw, 1.85rem);
+  border-left: 6px solid var(--primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+}
+
+.join-stamp-pill {
+  display: inline-block;
+  font-family: "Special Elite", "Courier New", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.7rem;
+  margin-bottom: 0.75rem;
+  background: var(--done-bg);
+  color: var(--ink);
+  border: var(--border-w) double var(--ink);
+  border-radius: 6px;
+  transform: rotate(-1.5deg);
+}
+
+.join-form-body h2 {
+  font-size: clamp(1.2rem, 3vw, 1.45rem);
+  margin-bottom: 0.45rem;
+}
+
+.join-form-body p {
+  margin-bottom: 0.65rem;
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+.join-stamps-link {
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.join-form-cta {
+  flex: none;
+}
+
+.join-form-btn {
+  white-space: normal;
+  line-height: 1.25;
+}
+
+@media (min-width: 680px) {
+  .join-form-card {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    gap: 1.75rem;
+  }
+
+  .join-form-body {
+    flex: 1 1 auto;
+  }
+}
+
+.join-privacy {
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 1.5rem;
 }
