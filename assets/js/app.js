@@ -29,7 +29,7 @@
   }
 
   function isExternalForm() { return !!(CFG.formUrl && String(CFG.formUrl).trim()); }
-  function ctaHref() { return "participar.html"; }   // os botões "Entrar na comunidade" passam sempre pela explicação
+  function ctaHref() { return "participar.html"; }
   function formHref() { return isExternalForm() ? CFG.formUrl : "participar.html"; }
 
   function currentPage() {
@@ -81,9 +81,9 @@
     '<circle cx="32" cy="32" r="22" fill="none" stroke="currentColor" stroke-width="3"/>' +
     '<text x="32" y="40" text-anchor="middle" font-family="Georgia, \'Times New Roman\', serif" font-weight="700" font-size="22" fill="currentColor">LL</text>' +
     "</svg>";
-  
+
   /* ---------- cabeçalho e rodapé ---------- */
- var NAV = [
+  var NAV = [
     ["o-que-somos.html", "nav.about"],
     ["como-funciona.html", "nav.how"],
     ["eventos.html", "nav.events"],
@@ -155,11 +155,12 @@
             esc(t("nav.menu")) + "</button>" +
           '<nav class="site-nav" id="site-nav" aria-label="' + esc(t("nav.label")) + '"><ul>' + links + "</ul></nav>" +
         "</div></div>";
-    
+
       header.querySelectorAll("[data-lang]").forEach(function (b) {
         b.addEventListener("click", function () { setLang(b.getAttribute("data-lang")); });
       });
       document.getElementById("theme-select").addEventListener("change", function (e) { setTheme(e.target.value); });
+
       var toggle = document.getElementById("nav-toggle");
       var nav = document.getElementById("site-nav");
       toggle.addEventListener("click", function () {
@@ -189,7 +190,7 @@
       });
 
       menuPaginas.addEventListener("mouseleave", function () {
-        if (fixado) return; // Se foi aberto por clique, não fecha ao tirar o mouse
+        if (fixado) return;
         timerMenu = setTimeout(function () {
           dropPaginas.classList.remove("ativo");
           btnLista.setAttribute("aria-expanded", "false");
@@ -237,27 +238,34 @@
       });
     });
 
-    // Botões "Entrar na comunidade": levam à página "Como participar" (explicação antes do formulário)
+    // Botões "Entrar na comunidade": levam à página "Como participar"
     root.querySelectorAll("[data-cta]").forEach(function (a) {
       a.textContent = t(a.getAttribute("data-i18n") || "cta.join");
       a.setAttribute("href", ctaHref());
     });
 
-    // Botão da página "Como participar": é o único que abre o formulário (em nova aba)
+    // Botão da comunidade no WhatsApp (participar.html)
+    root.querySelectorAll("[data-whatsapp]").forEach(function (a) {
+      a.setAttribute("href", CFG.whatsappUrl || "#");
+      a.setAttribute("target", "_blank");
+      a.setAttribute("rel", "noopener");
+    });
+
+    // Botão de cadastro no formulário (participar.html)
     root.querySelectorAll("[data-form]").forEach(function (a) {
       var label = t(a.getAttribute("data-i18n") || "join.open");
       a.setAttribute("href", formHref());
       if (isExternalForm()) {
         a.setAttribute("target", "_blank");
         a.setAttribute("rel", "noopener");
-        a.textContent = label + t("common.newtab");   // um só texto, para não quebrar em duas colunas no botão
+        a.textContent = label + t("common.newtab");
       } else {
         a.textContent = label;
         a.removeAttribute("target");
       }
     });
 
-    // Links externos (Instagram etc.)
+    // Links externos (Instagram, LinkedIn etc.)
     root.querySelectorAll("[data-instagram]").forEach(function (a) {
       a.setAttribute("href", CFG.instagramUrl || "#");
       a.setAttribute("target", "_blank");
@@ -281,7 +289,7 @@
     root.querySelectorAll("[data-email]").forEach(function (el) { el.textContent = CFG.email || ""; });
     root.querySelectorAll("[data-mailto]").forEach(function (a) { a.setAttribute("href", "mailto:" + (CFG.email || "")); });
 
-    // Aviso de formulário pendente (só aparece para a equipe, enquanto formUrl estiver vazio)
+    // Aviso de formulário pendente (só aparece enquanto formUrl estiver vazio)
     root.querySelectorAll("[data-form-pending]").forEach(function (el) { el.hidden = isExternalForm(); });
 
     // Título da aba do navegador
@@ -322,7 +330,6 @@
           if (c.date && !/^\d{4}-\d{2}-\d{2}$/.test(c.date)) {
             state.notes.push("Evento \"" + c.name + "\": a data \"" + c.date + "\" não está no formato ano-mês-dia (ex.: 2026-12-05); o evento aparece sem data.");
           } else if (c.status === "upcoming" && c.date && c.date < today) {
-            // a data já passou: o evento vai sozinho para "Realizados"
             c.status = "done";
             state.notes.push("Evento \"" + c.name + "\": a data " + c.date + " já passou, então ele aparece em \"Realizados\" (não precisa trocar o status).");
           }
@@ -336,7 +343,6 @@
       });
   }
 
-  /* Aviso para a equipe: abra o site com ?checar=1 no final do endereço (ex.: eventos.html?checar=1) */
   function renderCheck() {
     var old = document.getElementById("ll-check");
     if (old) old.parentNode.removeChild(old);
